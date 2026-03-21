@@ -1,21 +1,30 @@
 {
   "name": "express-workshop",
   "version": "1.0.0",
-  "description": "An API REST using express.js",
+  "description": "This is a project for the node.js workshop",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon index",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Paola-Lizet/express_workshop.git"
+  },
   "keywords": [
-    "api",
-    "rest",
+    "node",
+    "jwt",
     "express",
-    "nodejs"
+    "mysql"
   ],
   "license": "ISC",
   "author": "Paola Lizet",
-  "type": "commonjs",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+  "bugs": {
+    "url": "https://github.com/Paola-Lizet/express_workshop/issues"
   },
+  "homepage": "https://github.com/Paola-Lizet/express_workshop#readme",
   "dependencies": {
-    "express": "^5.2.1"
+    "express": "^5.2.1",
+    "nodemon": "^3.1.14"
   }
 }
