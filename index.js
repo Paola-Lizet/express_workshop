@@ -3,14 +3,13 @@ const app = express();
 const { pokemon } = require('./pokedex.json');
 
 app.get("/", (req, res, next) => {
-    res.status(200);
-    res.send("Bienvenido al Pokedex");
+    return res.status(200).send("Bienvenido al Pokedex");
 });
 
-app.get("/pokemon/all", (req,res,next) => {
-    res.status(200);
-    res.send(pokemon);
+app.get("/pokemon", (req,res,next) => {
+    return res.status(200).send(pokemon);
 })
+
 
 //Prof, tuve que modificar un poco el app.get (el siguiente)
 //porque la versión que tengo ya no permite el "([0-9]{1,3)"
@@ -19,12 +18,10 @@ app.get('/pokemon/:id', (req, res, next) => {
     if (/^[0-9]{1,3}$/.test(idParam)) {
         const id = parseInt(idParam) - 1;
         if (pokemon[id]) {
-            res.status(200)
-            res.send(pokemon[id]);
+            return res.status(200).send(pokemon[id]);
         }
         else {
-            res.status(404)
-            res.send("Pokemon no encontrado");
+            return res.status(404).send("Pokemon no encontrado");
         }
     } 
     else {
@@ -32,18 +29,23 @@ app.get('/pokemon/:id', (req, res, next) => {
     }
 });
  
+//Lo mismo, tuve que modificar un poco el app.get 
+//porque la versión que tengo ya no permite el la forma del video
 app.get('/pokemon/:name', (req, res, next) => {
-    const name = req.params.name; 
-    for(i=0; i<pokemon.length; i++){
-        if(pokemon[i].name==name){
-            res.status(200);
-            res.send(pokemon[i]);
-        }
+    const name = req.params.name;
+    if (!/^[A-Za-z]+$/.test(name)) {
+        return next(); 
     }
-    res.status(404);
-    res.send("Pokemon no encontrado");
+    const pk= pokemon.filter((p) => {
+        return (p.name.toUpperCase() == name.toLocaleUpperCase()) ? p : null; 
+    });
+    (pk.length>0) ?
+        res.status(200).send(pk) : 
+        res.status(404).send("Pokemon no encontrado")
+
 })
 
+
 app.listen(process.env.PORT || 3000, () => {
-    console.log("Server is running...");
-});
+    console.log("Server is running...")
+})
