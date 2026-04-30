@@ -10,9 +10,9 @@ const user = require('./routes/user');
 const auth = require('./middleware/auth');
 const notFound = require('./middleware/notFound');
 const indexDos = require('./middleware/indexDos');
-const cors = require('./middleware/cors');
+const cors = require('cors');
 
-app.use(cors);
+app.use(cors()); 
 app.use(morgan('dev'));
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
